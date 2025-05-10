@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Filters;
+using WebApi.Documentation;
 using WebApi.Models;
 using WebApi.Services;
 
@@ -10,6 +12,7 @@ public class VerificationController(IVerificationService verificationService) : 
 {
     private readonly IVerificationService _verificationService = verificationService;
 
+    [SwaggerRequestExample(typeof(SendVerificationCodeRequest), typeof(SendExample))]
     [HttpPost("send")]
     public async Task<IActionResult> Send(SendVerificationCodeRequest request)
     {
@@ -23,6 +26,7 @@ public class VerificationController(IVerificationService verificationService) : 
     }
 
 
+    [SwaggerRequestExample(typeof(VerifyVerificationCodeRequest), typeof(VerifyExample))]
     [HttpPost("verify")]
     public IActionResult Verify(VerifyVerificationCodeRequest request)
     {
