@@ -31,7 +31,7 @@ public class VerificationController(IVerificationService verificationService) : 
     public IActionResult Verify(VerifyVerificationCodeRequest request)
     {
         if (!ModelState.IsValid)
-            return BadRequest(new { Error = "Invaled or expired verification code" });
+            return BadRequest(new { Error = "Invalid or expired verification code" });
 
         var result = _verificationService.VerifyVerificationCode(request);
         return result.Succeeded
