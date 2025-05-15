@@ -2,16 +2,10 @@
 using Azure.Communication.Email;
 using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics;
+using WebApi.Interfaces;
 using WebApi.Models;
 
 namespace WebApi.Services;
-
-public interface IVerificationService
-{
-    Task<VerificationServiceResult> SendVerificationCodeAsync(SendVerificationCodeRequest request);
-    void SaveVerificationCode(SaveVerificationCodeRequest request);
-    VerificationServiceResult VerifyVerificationCode(VerifyVerificationCodeRequest request);
-}
 
 public class VerificationService(IConfiguration configuration, EmailClient emailClient, IMemoryCache cache) : IVerificationService
 {
@@ -27,7 +21,8 @@ public class VerificationService(IConfiguration configuration, EmailClient email
             if (request == null || string.IsNullOrWhiteSpace(request.Email))
                 return new VerificationServiceResult { Succeeded = false, Error = "Recipient email address is required" };
 
-            var verificationCode = _random.Next(100000, 999999).ToString();
+            var verificationCode = GenerateVerificationCode();
+
             var subject = $"Your verification code is {verificationCode}";
             var plainTextContent = $@"
             Verify you email address for Ventixe
@@ -55,6 +50,12 @@ public class VerificationService(IConfiguration configuration, EmailClient email
             Debug.WriteLine(ex);
             return new VerificationServiceResult { Succeeded = false, Error = "Failed to send verification email" };
         }
+    }
+
+
+    public string GenerateVerificationCode()
+    {
+        return _random.Next(100000, 999999).ToString();
     }
 
 

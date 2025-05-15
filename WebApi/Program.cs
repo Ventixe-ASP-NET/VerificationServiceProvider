@@ -1,6 +1,7 @@
 using Azure.Communication.Email;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using WebApi.Interfaces;
 using WebApi.Middlewares;
 using WebApi.Services;
 

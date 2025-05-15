@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Filters;
 using WebApi.Documentation;
+using WebApi.Interfaces;
 using WebApi.Models;
-using WebApi.Services;
 
 namespace WebApi.Controllers;
 
